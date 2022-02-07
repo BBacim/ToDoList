@@ -18,8 +18,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
 
+const clientPromise = connection.asPromise().then(connection => connection.getClient())
+
 const sessionStore = new MongoStore({
-  client: connection.getClient(),
+  client: clientPromise,
   collectionName: "users"
 });
 
